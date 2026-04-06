@@ -4,219 +4,580 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rest & Restore Therapy</title>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    body {
+    :root{
+      --bg:#f4f1ec;
+      --panel:#f7f3ee;
+      --panel-2:#ece7df;
+      --white:#ffffff;
+      --olive:#8d6e63;
+      --olive-dark:#7b6157;
+      --tan:#b9895c;
+      --ink:#433c36;
+      --muted:#675f58;
+      --line:rgba(86,76,68,.10);
+      --shadow:0 16px 36px rgba(73,61,50,.08);
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+      --max:1280px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
       margin:0;
       font-family:Inter, sans-serif;
-      background:#f4f1ec;
-      color:#4d453f;
+      background:var(--bg);
+      color:var(--ink);
+      line-height:1.6;
     }
 
-    .container {
-      width:min(1200px, calc(100% - 40px));
-      margin:auto;
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+    .container{width:min(calc(100% - 40px), var(--max));margin:0 auto}
+
+    /* header */
+    .site-header{
+      background:var(--bg);
+      position:sticky;
+      top:0;
+      z-index:100;
     }
 
-    /* NAV */
-    .nav {
+    .nav{
+      min-height:96px;
       display:grid;
-      grid-template-columns: 1fr auto 1fr;
+      grid-template-columns:260px 1fr 240px;
       align-items:center;
-      padding:22px 0;
+      gap:20px;
     }
 
-    .nav-links {
+    .brand{
       display:flex;
-      gap:30px;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand-mark{
+      width:54px;
+      height:54px;
+      color:var(--tan);
+      flex:0 0 auto;
+    }
+
+    .brand-text{
+      color:var(--tan);
+      line-height:.95;
+      font-family:"Cormorant Garamond", serif;
+      text-transform:uppercase;
+      letter-spacing:.09em;
+      font-weight:700;
+    }
+
+    .brand-text .big{
+      display:block;
+      font-size:1.18rem;
+    }
+
+    .brand-text .small{
+      display:block;
+      font-size:.72rem;
+      letter-spacing:.18em;
+      margin-top:4px;
+    }
+
+    .nav-links{
+      display:flex;
       justify-content:center;
+      align-items:center;
+      gap:34px;
+      font-size:.98rem;
       font-weight:600;
+      color:#4d4b46;
+      flex-wrap:wrap;
     }
 
-    .consult-btn {
+    .nav-links a{
+      position:relative;
+      padding:4px 0;
+    }
+
+    .nav-links a.active::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-7px;
+      height:3px;
+      background:#72705f;
+      border-radius:3px;
+    }
+
+    .nav-links .has-arrow::after{
+      content:"⌄";
+      margin-left:6px;
+      font-size:.8rem;
+      color:#706c66;
+      vertical-align:1px;
+    }
+
+    .consult-btn{
       justify-self:end;
-      background:#8d6e63;
-      color:#fff;
-      padding:12px 22px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:58px;
+      padding:0 28px;
       border-radius:999px;
-      font-weight:600;
+      background:var(--olive);
+      color:#fff;
+      font-weight:700;
+      box-shadow:0 10px 22px rgba(141,110,99,.16);
+      transition:.18s ease transform, .18s ease background;
     }
 
-    /* HERO */
-    .hero-card {
+    .consult-btn:hover{transform:translateY(-1px);background:var(--olive-dark)}
+
+    .top-strip{
+      background:#9a7d70;
+      color:#fff;
+      text-align:center;
+      font-size:.94rem;
+      font-weight:700;
+      padding:11px 12px;
+    }
+
+    /* hero */
+    .hero-wrap{padding:10px 0 22px}
+
+    .hero-card{
       display:grid;
-      grid-template-columns:42% 58%;
-      height:420px;
-      border-radius:26px;
+      grid-template-columns:39% 61%;
+      height:500px;
+      background:var(--panel);
+      border-radius:28px;
       overflow:hidden;
-      background:#f6f1eb;
+      box-shadow:var(--shadow);
     }
 
-    .hero-left {
-      padding:42px;
+    .hero-left{
+      position:relative;
+      padding:54px 44px 40px 50px;
       display:flex;
       flex-direction:column;
       justify-content:center;
+      background:linear-gradient(180deg,#f7f3ee 0%, #f2ede7 100%);
     }
 
-    .hero-title {
-      font-family:'Cormorant Garamond', serif;
-      font-size:3.6rem;
-      line-height:1;
+    .hero-left::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:150px;
+      height:150px;
+      background:url('leaf-small.png') no-repeat center/contain;
+      opacity:.26;
+      pointer-events:none;
+    }
+
+    .hero-title{
+      margin:0 0 10px;
+      font-family:"Cormorant Garamond", serif;
+      font-size:clamp(4rem, 6vw, 5.4rem);
+      line-height:.9;
+      letter-spacing:-.045em;
+      color:#3f3934;
+      font-weight:600;
       max-width:420px;
     }
 
-    .hero-title .accent {
-      color:#b9895c;
+    .hero-title .accent{
+      color:var(--tan);
       font-style:italic;
+      font-weight:500;
     }
 
-    .hero-copy {
-      margin:14px 0 20px;
-      font-size:1rem;
-      color:#6f675f;
-      max-width:340px;
+    .mini-line{
+      width:42px;
+      height:3px;
+      background:#cdb49a;
+      border-radius:3px;
+      margin:12px 0 18px;
     }
 
-    .primary-btn {
-      background:#8d6e63;
-      color:#fff;
-      padding:12px 20px;
+    .hero-copy{
+      max-width:360px;
+      margin:0 0 22px;
+      color:#5f5751;
+      font-size:1.02rem;
+      line-height:1.72;
+    }
+
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:18px;
+    }
+
+    .primary-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:54px;
+      padding:0 22px;
       border-radius:999px;
-      width:max-content;
-      font-weight:600;
+      background:#72804e;
+      color:#fff;
+      font-weight:700;
+      box-shadow:0 10px 20px rgba(114,128,78,.18);
+      transition:.18s ease transform, .18s ease background;
     }
 
-    .hero-right {
+    .primary-btn:hover{transform:translateY(-1px);background:#657245}
+
+    .primary-btn::after{
+      content:"›";
+      margin-left:10px;
+      font-size:1.1rem;
+    }
+
+    .ghost-link{
+      font-weight:700;
+      color:#4d4b45;
+    }
+
+    .ghost-link::after{
+      content:" →";
+    }
+
+    .hero-right{
+      position:relative;
       background:
-        linear-gradient(90deg, rgba(244,237,227,.7), transparent),
+        linear-gradient(90deg, rgba(244,237,227,.78) 0%, rgba(244,237,227,.28) 12%, rgba(244,237,227,0) 22%),
+        linear-gradient(180deg, rgba(80,66,55,.03), rgba(80,66,55,.10)),
         url('https://images.unsplash.com/photo-1604881991720-f91add269bed?auto=format&fit=crop&w=1800&q=80') center/cover;
     }
 
-    /* FEATURES */
-    .features {
+    .hero-quote{
+      position:absolute;
+      right:24px;
+      bottom:22px;
+      width:255px;
+      background:rgba(250,245,239,.96);
+      border-radius:18px;
+      padding:20px 20px 18px;
+      box-shadow:0 14px 24px rgba(75,63,55,.10);
+      color:#6c655e;
+      font-style:italic;
+      font-size:.98rem;
+    }
+
+    .hero-quote::before{
+      content:"“";
+      position:absolute;
+      left:14px;
+      top:10px;
+      font-size:1.8rem;
+      line-height:1;
+      color:#b27b51;
+      font-style:normal;
+    }
+
+    .hero-quote span{
+      display:block;
+      padding-left:20px;
+    }
+
+    /* feature strip */
+    .features{
       display:grid;
       grid-template-columns:repeat(4,1fr);
-      margin-top:24px;
-      background:#ece7df;
-      border-radius:18px;
+      background:var(--panel-2);
+      border-radius:20px;
+      margin-top:20px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
     }
 
-    .feature {
-      padding:24px;
+    .feature{
       text-align:center;
-      font-size:.95rem;
-      color:#5f5750;
+      padding:28px 18px 24px;
+      position:relative;
     }
 
-    /* ABOUT */
-    .about-grid {
+    .feature + .feature::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:50%;
+      transform:translateY(-50%);
+      width:1px;
+      height:76px;
+      background:rgba(86,76,68,.10);
+    }
+
+    .feature-icon{
+      width:38px;
+      height:38px;
+      margin:0 auto 12px;
+      color:#7f875f;
+    }
+
+    .feature h3{
+      margin:0 0 8px;
+      font-size:1rem;
+      color:#4d463f;
+    }
+
+    .feature p{
+      margin:0 auto;
+      max-width:220px;
+      color:#6e665f;
+      font-size:.95rem;
+      line-height:1.55;
+    }
+
+    /* about */
+    .about-section{padding:24px 0 30px}
+
+    .about-grid{
       display:grid;
       grid-template-columns:42% 58%;
-      gap:24px;
-      margin-top:40px;
+      gap:28px;
+      align-items:stretch;
+    }
+
+    .about-left{
+      position:relative;
+      padding:34px 14px 28px 104px;
+      min-height:350px;
+      display:flex;
       align-items:center;
     }
 
-    .about-title {
-      font-family:'Cormorant Garamond', serif;
-      font-size:2.8rem;
-      line-height:1.1;
+    .about-left::before{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:116px;
+      height:210px;
+      background:url('leaf-large.png') no-repeat center/contain;
+      opacity:.26;
+      pointer-events:none;
     }
 
-    .about-title .accent {
-      color:#b9895c;
-      font-style:italic;
+    .about-label{
+      color:#b18662;
+      font-size:.9rem;
+      font-weight:700;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-bottom:12px;
     }
 
-    .about-text {
-      color:#6b635c;
-      margin-top:12px;
+    .about-title{
+      margin:0 0 18px;
+      font-family:"Cormorant Garamond", serif;
+      font-size:clamp(3rem, 4.2vw, 4.1rem);
+      line-height:.98;
+      letter-spacing:-.03em;
+      color:#433c36;
       max-width:420px;
+      font-weight:600;
     }
 
-    .about-image {
+    .about-title .accent{
+      color:var(--tan);
+      font-style:italic;
+      font-weight:500;
+    }
+
+    .about-copy{
+      max-width:430px;
+      color:#5d554e;
+      font-size:1rem;
+      line-height:1.7;
+      margin:0 0 12px;
+    }
+
+    .olive-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:52px;
+      padding:0 22px;
+      margin-top:14px;
+      border-radius:999px;
+      background:#72804e;
+      color:#fff;
+      font-weight:700;
+      box-shadow:0 10px 20px rgba(114,128,78,.18);
+      transition:.18s ease transform, .18s ease background;
+    }
+
+    .olive-btn:hover{transform:translateY(-1px);background:#657245}
+
+    .olive-btn::after{
+      content:"›";
+      margin-left:10px;
+      font-size:1.1rem;
+    }
+
+    .about-image{
       border-radius:22px;
+      min-height:350px;
       overflow:hidden;
-      height:320px;
+      box-shadow:var(--shadow);
       background:
-        linear-gradient(180deg, rgba(80,66,55,.05), rgba(80,66,55,.15)),
+        linear-gradient(180deg, rgba(80,66,55,.03), rgba(80,66,55,.10)),
         url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1800&q=80') center/cover;
     }
 
-    /* MOBILE */
-    @media(max-width:900px){
-      .hero-card,
-      .about-grid {
+    @media (max-width: 1100px){
+      .nav{
         grid-template-columns:1fr;
-        height:auto;
+        justify-items:start;
+        padding:20px 0 24px;
       }
+
+      .consult-btn{justify-self:start}
+      .hero-card,
+      .about-grid{grid-template-columns:1fr}
+      .features{grid-template-columns:repeat(2,1fr)}
+      .feature:nth-child(3)::before,
+      .feature:nth-child(4)::before{display:none}
     }
 
+    @media (max-width: 700px){
+      .container{width:min(calc(100% - 20px), var(--max))}
+      .nav-links{gap:18px}
+      .hero-card{height:auto}
+      .hero-left{padding:38px 24px 34px}
+      .hero-title{font-size:clamp(3.2rem, 15vw, 4.5rem)}
+      .hero-right{min-height:320px}
+      .hero-quote{
+        left:16px;
+        right:16px;
+        width:auto;
+      }
+      .features{grid-template-columns:1fr}
+      .feature + .feature::before{display:none}
+      .about-left{
+        padding:28px 20px 28px 24px;
+        min-height:auto;
+      }
+      .about-left::before{display:none}
+    }
   </style>
 </head>
-
 <body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#" class="brand" aria-label="Rest & Restore Therapy home">
+        <svg class="brand-mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M31 58C32 43 38 30 50 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M18 46C29 41 37 31 42 17" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M15 30C26 27 35 18 40 5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M30 29C35 34 39 41 41 50" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M35 14C41 19 47 27 50 36" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-text">
+          <span class="big">Rest &amp;<br>Restore</span>
+          <span class="small">Therapy</span>
+        </span>
+      </a>
 
-<div class="container">
+      <nav class="nav-links" aria-label="Primary">
+        <a class="active" href="#">Home</a>
+        <a href="#about">About</a>
+        <a href="#team">Our Team</a>
+        <a class="has-arrow" href="#services">Services</a>
+        <a class="has-arrow" href="#specialties">Specialties</a>
+        <a href="#resources">Resources</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
-  <!-- NAV -->
-  <div class="nav">
-    <div><strong>Rest & Restore Therapy</strong></div>
-
-    <div class="nav-links">
-      <span>Home</span>
-      <span>About</span>
-      <span>Services</span>
-      <span>Contact</span>
+      <a class="consult-btn" href="#contact">Book a Consultation</a>
     </div>
+  </header>
 
-    <div class="consult-btn">Book a Consultation</div>
-  </div>
+  <div class="top-strip">Compassionate care. Personalized support. A place to rest, heal, and grow.</div>
 
-  <!-- HERO -->
-  <div class="hero-card">
-    <div class="hero-left">
-      <div class="hero-title">
-        Therapy that helps you <span class="accent">rest & restore.</span>
+  <main>
+    <section class="hero-wrap">
+      <div class="container">
+        <div class="hero-card">
+          <div class="hero-left">
+            <h1 class="hero-title">Therapy that helps you <span class="accent">rest &amp; restore.</span></h1>
+            <div class="mini-line"></div>
+            <p class="hero-copy">
+              We provide compassionate, personalized mental health care to help you navigate life’s challenges and move forward with clarity and confidence.
+            </p>
+            <div class="cta-row">
+              <a class="primary-btn" href="#contact">Book a Consultation</a>
+              <a class="ghost-link" href="#about">Learn More About Us</a>
+            </div>
+          </div>
+
+          <div class="hero-right">
+            <div class="hero-quote">
+              <span>A supportive space to feel heard, understood, and empowered.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="features">
+          <div class="feature">
+            <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M24 39s-11-6.9-15.2-15.2C5 16.5 9.3 10 16.3 10c3.7 0 6.1 2 7.7 4.5C25.6 12 28 10 31.7 10 38.7 10 43 16.5 39.2 23.8 35 32.1 24 39 24 39Z" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <h3>Compassionate Care</h3>
+            <p>We meet you with empathy, respect, and understanding.</p>
+          </div>
+          <div class="feature">
+            <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M24 25a6 6 0 1 0 0-12 6 6 0 0 0 0 12ZM12 37c0-5 5-9 12-9s12 4 12 9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M10 20a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm28 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4 35c0-3 2.8-5.6 7-6.6M44 35c0-3-2.8-5.6-7-6.6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>
+            <h3>Experienced Team</h3>
+            <p>A diverse group of clinicians with specialized training.</p>
+          </div>
+          <div class="feature">
+            <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M24 8v22" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M24 30c-7.5 0-13 3.4-16 10" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M24 30c7.5 0 13 3.4 16 10" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M16 15c4.5 1.5 8 5.5 8 11" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M32 15c-4.5 1.5-8 5.5-8 11" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+            <h3>Personalized Support</h3>
+            <p>Care tailored to your unique needs and goals.</p>
+          </div>
+          <div class="feature">
+            <svg class="feature-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="24" cy="24" r="7" stroke="currentColor" stroke-width="2.6"/><path d="M24 6v6M24 36v6M42 24h-6M12 24H6M36.7 11.3l-4.2 4.2M15.5 32.5l-4.2 4.2M36.7 36.7l-4.2-4.2M15.5 15.5l-4.2-4.2" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+            <h3>A Warm, Welcoming Space</h3>
+            <p>In-person and virtual care options available.</p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="hero-copy">
-        We provide compassionate, personalized mental health care to help you navigate life’s challenges and move forward with clarity.
+    <section id="about" class="about-section">
+      <div class="container about-grid">
+        <div class="about-left">
+          <div>
+            <div class="about-label">About Us</div>
+            <h2 class="about-title">A place to heal. A team that <span class="accent">truly</span> cares.</h2>
+            <p class="about-copy">
+              Rest &amp; Restore Therapy is now a collaborative group practice of five therapists, each bringing unique strengths and specialties to support individuals, couples, and families.
+            </p>
+            <p class="about-copy">
+              Our shared mission is to create a warm, inclusive space where you can feel safe to explore, heal, and grow.
+            </p>
+            <a class="olive-btn" href="#team">Meet Our Team</a>
+          </div>
+        </div>
+
+        <div class="about-image" id="team" aria-label="Therapy team image"></div>
       </div>
-
-      <div class="primary-btn">Get Started</div>
-    </div>
-
-    <div class="hero-right"></div>
-  </div>
-
-  <!-- FEATURES -->
-  <div class="features">
-    <div class="feature">Compassionate Care</div>
-    <div class="feature">Experienced Team</div>
-    <div class="feature">Personalized Support</div>
-    <div class="feature">Warm Environment</div>
-  </div>
-
-  <!-- ABOUT -->
-  <div class="about-grid">
-    <div>
-      <div class="about-title">
-        A place to heal. A team that <span class="accent">truly</span> cares.
-      </div>
-
-      <div class="about-text">
-        Rest & Restore Therapy is a growing group practice offering support for teens, young adults, and adults navigating anxiety, trauma, and life transitions.
-      </div>
-    </div>
-
-    <div class="about-image"></div>
-  </div>
-
-</div>
-
+    </section>
+  </main>
 </body>
 </html>
